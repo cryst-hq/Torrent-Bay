@@ -22,7 +22,13 @@ A **100% serverless, portable, zero-dependency** torrent magnet link index. Buil
 ### Just Open It
 
 ```bash
-# Double-click index.html - it works instantly!
+# Clone from GitHub
+git clone https://github.com/YOUR_USERNAME/Torrent-Bay.git
+cd Torrent-Bay
+
+# Or download ZIP and extract
+
+# Then double-click index.html - it works instantly!
 open index.html
 ```
 
