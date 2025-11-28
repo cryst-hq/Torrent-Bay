@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Magnet - Torrent Bay</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <h1>TORRENT BAY</h1>
+                <p class="tagline">Add New Magnet Link</p>
+            </div>
+            <a href="index.html" class="btn-back">Back to Index</a>
+        </header>
+
+        <!-- Warning Banner -->
+        <div class="warning-banner" id="warning-banner" style="display: none;">
+            <span id="warning-message"></span>
+            <button onclick="closeWarning()">✕</button>
+        </div>
+
+        <!-- Success Message -->
+        <div class="success-banner" id="success-banner" style="display: none;">
+            <span id="success-message"></span>
+            <button onclick="closeSuccess()">✕</button>
+        </div>
+
+        <!-- Add Form -->
+        <div class="form-container">
+            <h2>Submit a Magnet Link</h2>
+            <p class="form-subtitle">Help build the index. All submissions are public and anonymous.</p>
+
+            <form id="add-form">
+                <div class="form-group">
+                    <label for="name">Torrent Name *</label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="name" 
+                        placeholder="e.g., Ubuntu 24.04 LTS Desktop ISO"
+                        required
+                        maxlength="200"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="magnet">Magnet Link *</label>
+                    <textarea 
+                        id="magnet" 
+                        name="magnet" 
+                        placeholder="magnet:?xt=urn:btih:..."
+                        required
+                        rows="3"
+                    ></textarea>
+                    <small>Must start with "magnet:?xt=urn:btih:"</small>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="category">Category *</label>
+                        <select id="category" name="category" required>
+                            <option value="">Select category...</option>
+                            <option value="Movies">Movies</option>
+                            <option value="TV">TV Shows</option>
+                            <option value="Games">Games</option>
+                            <option value="Apps">Apps</option>
+                            <option value="Music">Music</option>
+                            <option value="Books">Books</option>
+                            <option value="XXX">XXX</option>
+                            <option value="Anime">Anime</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="size">Size (optional)</label>
+                        <input 
+                            type="text" 
+                            id="size" 
+                            name="size" 
+                            placeholder="e.g., 4.2 GB"
+                            maxlength="50"
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tags">Tags (optional)</label>
+                    <input 
+                        type="text" 
+                        id="tags" 
+                        name="tags" 
+                        placeholder="Separate with commas: linux, iso, 2024, official"
+                        maxlength="200"
+                    >
+                    <small>Help others find this torrent. Use commas to separate tags.</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="uploader">Uploader Name (optional)</label>
+                    <input 
+                        type="text" 
+                        id="uploader" 
+                        name="uploader" 
+                        placeholder="e.g., Anonymous, YourName, etc."
+                        maxlength="50"
+                    >
+                </div>
+
+                <button type="submit" class="btn-submit" id="submit-btn">
+                    Submit Magnet
+                </button>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Only submit legal content. You are responsible for what you share.</p>
+            <p>This site does not host any files. Magnet links are public metadata.</p>
+        </footer>
+    </div>
+
+    <!-- Local Storage Client -->
+    <script src="assets/db.js"></script>
+    <script>
+        // Form submission handler
+        document.getElementById('add-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            const formData = {
+                name: document.getElementById('name').value.trim(),
+                magnet: document.getElementById('magnet').value.trim(),
+                category: document.getElementById('category').value,
+                size: document.getElementById('size').value.trim() || null,
+                tags: document.getElementById('tags').value.trim() || null,
+                uploader: document.getElementById('uploader').value.trim() || 'Anonymous'
+            };
+
+            // Validate magnet link
+            if (!formData.magnet.startsWith('magnet:?xt=urn:btih:')) {
+                showWarning('Invalid magnet link! Must start with "magnet:?xt=urn:btih:"');
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+                return;
+            }
+
+            try {
+                await db.addTorrent(formData);
+                showSuccess('Magnet link added successfully! Redirecting...');
+                document.getElementById('add-form').reset();
+                
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+
+            } catch (error) {
+                console.error('Error adding magnet:', error);
+                showWarning(`Failed to add magnet: ${error.message}`);
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalText;
+            }
+        });
+
+        function showWarning(message) {
+            const banner = document.getElementById('warning-banner');
+            const messageEl = document.getElementById('warning-message');
+            messageEl.textContent = message;
+            banner.style.display = 'flex';
+        }
+
+        function closeWarning() {
+            document.getElementById('warning-banner').style.display = 'none';
+        }
+
+        function showSuccess(message) {
+            const banner = document.getElementById('success-banner');
+            const messageEl = document.getElementById('success-message');
+            messageEl.textContent = message;
+            banner.style.display = 'flex';
+        }
+
+        function closeSuccess() {
+            document.getElementById('success-banner').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,627 @@
+/* ============================================
+   TORRENT BAY - DARK PIRATE THEME
+   Portable Darknet Magnet Index Stylesheet
+   ============================================ */
+
+:root {
+    /* Ultra-Minimalist Black & White Palette */
+    --bg-dark: #000000;
+    --bg-secondary: #0a0a0a;
+    --bg-tertiary: #141414;
+    --accent-primary: #ffffff;
+    --accent-secondary: #e0e0e0;
+    --accent-tertiary: #c0c0c0;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --text-tertiary: #707070;
+    --border-color: #1a1a1a;
+    --border-hover: #333333;
+    --warning-bg: #0f0f0f;
+    --warning-border: #2a2a2a;
+    --success-bg: #0f0f0f;
+    --success-border: #2a2a2a;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+}
+
+.tagline {
+    color: var(--text-tertiary);
+    font-size: 0.75rem;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stats {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.stats #total-count {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.separator {
+    color: var(--border-color);
+}
+
+.status-indicator {
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 2px;
+    background: var(--bg-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+.status-indicator.online {
+    color: var(--text-primary);
+    border-color: var(--border-hover);
+}
+
+.status-indicator.offline {
+    color: var(--text-tertiary);
+    border-color: var(--border-color);
+}
+
+/* ============================================
+   BANNERS
+   ============================================ */
+.warning-banner, .success-banner {
+    background: var(--warning-bg);
+    border: 1px solid var(--warning-border);
+    padding: 10px 16px;
+    border-radius: 0;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+}
+
+.success-banner {
+    background: var(--success-bg);
+    border-color: var(--success-border);
+}
+
+.warning-banner button, .success-banner button {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0 10px;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   CONTROLS (Search, Filters, Add Button)
+   ============================================ */
+.controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.utility-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-utility {
+    padding: 10px 16px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.15s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-utility:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+    min-width: 300px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    transition: all 0.15s;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--border-hover);
+    background: var(--bg-dark);
+}
+
+.search-icon {
+    display: none;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+}
+
+.filters select {
+    padding: 10px 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.filters select:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-dark);
+}
+
+.filters select:focus {
+    outline: none;
+    border-color: var(--border-hover);
+    background: var(--bg-dark);
+}
+
+.btn-add, .btn-back {
+    padding: 10px 20px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.15s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-add:hover, .btn-back:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--border-hover);
+}
+
+/* ============================================
+   RESULTS INFO
+   ============================================ */
+.results-info {
+    color: var(--text-tertiary);
+    margin-bottom: 12px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.results-info #results-count {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* ============================================
+   TORRENTS LIST
+   ============================================ */
+.torrents-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.loading, .no-results {
+    text-align: center;
+    padding: 50px 20px;
+    color: var(--text-tertiary);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.torrent-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    padding: 16px;
+    transition: all 0.15s;
+}
+
+.torrent-card:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-dark);
+}
+
+.torrent-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    gap: 15px;
+}
+
+.torrent-name {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    flex: 1;
+    line-height: 1.4;
+}
+
+.category-badge {
+    background: transparent;
+    padding: 3px 8px;
+    border-radius: 0;
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+    border: 1px solid var(--border-color);
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.torrent-meta {
+    display: flex;
+    gap: 16px;
+    color: var(--text-tertiary);
+    font-size: 0.75rem;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.torrent-meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.tags-container {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.tag-pill {
+    background: transparent;
+    padding: 2px 6px;
+    border-radius: 0;
+    font-size: 0.7rem;
+    color: var(--text-tertiary);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all 0.1s;
+    text-transform: lowercase;
+}
+
+.tag-pill:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    border-color: var(--border-hover);
+}
+
+.torrent-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.btn-magnet, .btn-copy, .btn-report {
+    padding: 8px 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.1s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+.btn-magnet {
+    background: var(--text-primary);
+    color: var(--bg-dark);
+    font-weight: 600;
+}
+
+.btn-magnet:hover {
+    background: var(--accent-secondary);
+}
+
+.btn-copy {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-copy:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+}
+
+.btn-report {
+    background: transparent;
+    color: var(--text-tertiary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-report:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    border-color: var(--border-hover);
+}
+
+/* ============================================
+   FORM (Add Page)
+   ============================================ */
+.form-container {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    padding: 30px;
+    margin-bottom: 40px;
+    max-width: 800px;
+}
+
+.form-container h2 {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1.2rem;
+}
+
+.form-subtitle {
+    color: var(--text-tertiary);
+    margin-bottom: 25px;
+    font-size: 0.85rem;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 9px 12px;
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 0;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: all 0.15s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--border-hover);
+    background: var(--bg-dark);
+}
+
+.form-group small {
+    display: block;
+    margin-top: 4px;
+    color: var(--text-tertiary);
+    font-size: 0.75rem;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 12px 24px;
+    background: var(--text-primary);
+    border: 1px solid var(--text-primary);
+    border-radius: 0;
+    color: var(--bg-dark);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-submit:hover:not(:disabled) {
+    background: var(--accent-secondary);
+    border-color: var(--accent-secondary);
+}
+
+.btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+    text-align: center;
+    padding: 25px 20px;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-tertiary);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.footer p {
+    margin: 5px 0;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+@media (max-width: 768px) {
+    .logo h1 {
+        font-size: 2rem;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .controls {
+        flex-direction: column;
+    }
+
+    .search-box {
+        min-width: 100%;
+    }
+
+    .filters {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .filters select {
+        width: 100%;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .torrent-header {
+        flex-direction: column;
+    }
+
+    .torrent-actions {
+        flex-direction: column;
+    }
+
+    .torrent-actions button {
+        width: 100%;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    .logo h1 {
+        font-size: 1.5rem;
+    }
+
+    .torrent-card {
+        padding: 15px;
+    }
+}

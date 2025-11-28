@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torrent Bay - Decentralized Magnet Index</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <h1>TORRENT BAY</h1>
+                <p class="tagline">Magnet Link Index</p>
+            </div>
+            <div class="stats">
+                <span id="total-count">0</span> magnets indexed
+                <span class="separator">|</span>
+                <span id="last-updated">Never</span>
+                <span class="status-indicator" id="online-status" title="Offline"></span>
+            </div>
+        </header>
+
+        <!-- Warning Banner -->
+        <div class="warning-banner" id="warning-banner" style="display: none;">
+            <span id="warning-message"></span>
+            <button onclick="closeWarning()">✕</button>
+        </div>
+
+        <!-- Search & Filter Controls -->
+        <div class="controls">
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="search-input" 
+                    placeholder="Search magnets by name or tags..."
+                    autocomplete="off"
+                >
+                <span class="search-icon"></span>
+            </div>
+            
+            <div class="filters">
+                <select id="category-filter">
+                    <option value="">All Categories</option>
+                    <option value="Movies">Movies</option>
+                    <option value="TV">TV Shows</option>
+                    <option value="Games">Games</option>
+                    <option value="Apps">Apps</option>
+                    <option value="Music">Music</option>
+                    <option value="Books">Books</option>
+                    <option value="XXX">XXX</option>
+                    <option value="Anime">Anime</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <select id="sort-by">
+                    <option value="newest">Newest First</option>
+                    <option value="name">Name A-Z</option>
+                    <option value="size">Size (if available)</option>
+                </select>
+            </div>
+
+            <div class="utility-buttons">
+                <button onclick="exportDatabase()" class="btn-utility" title="Download database as JSON file">Export DB</button>
+                <label for="import-file" class="btn-utility" title="Import database from JSON file">Import DB</label>
+                <input type="file" id="import-file" accept=".json" style="display: none;" onchange="handleImport(this)">
+            </div>
+
+            <a href="add.html" class="btn-add">+ Add Magnet</a>
+        </div>
+
+        <!-- Results Container -->
+        <div class="results-info">
+            <span id="results-count">0</span> results
+        </div>
+
+        <div id="torrents-container" class="torrents-list">
+            <div class="loading">Loading magnets...</div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>This site only indexes magnet links. No files are hosted here.</p>
+        </footer>
+    </div>
+
+    <!-- Local Storage Client -->
+    <script src="assets/db.js"></script>
+    <script src="assets/script.js"></script>
+    <script>
+        // Handle database import from file
+        async function handleImport(input) {
+            if (!input.files || !input.files[0]) return;
+            
+            const file = input.files[0];
+            try {
+                const count = await db.importFromFile(file);
+                alert(`Successfully imported ${count} torrents!`);
+                location.reload();
+            } catch (error) {
+                alert('Failed to import: ' + error.message);
+            }
+            input.value = ''; // Reset file input
+        }
+    </script>
+</body>
+</html>

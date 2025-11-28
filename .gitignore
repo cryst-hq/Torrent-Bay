@@ -1,0 +1,20 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+
+# Don't ignore the actual config file - users need to edit it
+# (normally you'd ignore credentials, but this is meant to be edited by users)
